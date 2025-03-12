@@ -38,4 +38,28 @@ export class LoginComponent {
       }
     });
   }
+
+  onLogin() {
+    this.authService.login(this.cuit, this.pin).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.router.navigate(['/ticket']);
+        } else {
+          // Show error message using your preferred UI method
+          // For example, if using Angular Material:
+          this.showErrorMessage(response.message);
+        }
+      },
+      error: (error) => {
+        this.showErrorMessage('An error occurred during login');
+      }
+    });
+  }
+
+  private showErrorMessage(message: string) {
+    // Implement this according to your UI framework
+    // For example, if using Angular Material:
+    // this.snackBar.open(message, 'Close', { duration: 3000 });
+    console.log('Error: ' + message);
+  }
 }

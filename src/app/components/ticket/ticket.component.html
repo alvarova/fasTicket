@@ -4,12 +4,12 @@
             color="warn"
             [disabled]="!hasSelectedItems"
             (click)="onDelete()">
-      Eliminar
+      Eliminar Seleccionados
     </button>
     <button mat-raised-button
             color="primary"
             (click)="onClose()">
-      Cerrar
+      Cerrar Ticket
     </button>
   </div>
 
@@ -33,13 +33,13 @@
         </div>
       </mat-list-item>
     </mat-list>
-  </div>
 
-  <div class="ticket-footer">
     <div class="subtotal">
       Subtotal: {{ (ticketState$ | async)?.subtotal }}
     </div>
+  </div>
 
+  <div class="ticket-footer">
     <form #itemForm="ngForm" (ngSubmit)="onAddItem()" class="add-item-form">
       <mat-form-field appearance="outline">
         <mat-label>Monto</mat-label>

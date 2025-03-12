@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/data.models';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
     pin: '1234'
   };
 
-  constructor() {
+  constructor(private router: Router) {
     // Check if user is already logged in
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
@@ -24,22 +25,25 @@ export class AuthService {
     }
   }
 
-  login(cuit: string, pin: string): Observable<boolean> {
+  login(cuit: string, pin: string): Observable<{ success: boolean; message: string }> {
     // Validate CUIT format (xx-xxxxxxxx-x)
     const cuitRegex = /^\d{2}-\d{8}-\d{1}$/;
     if (!cuitRegex.test(cuit)) {
-      return of(false);
+      return of({ success: false, message: 'Invalid CUIT format' });
     }
 
     // Simulate API call - replace with real authentication
-    return of(cuit === this.MOCK_USER.cuit && pin === this.MOCK_USER.pin).pipe(
-      map(isValid => {
-        if (isValid) {
+    const isValid = cuit === this.MOCK_USER.cuit && pin === this.MOCK_USER.pin;
+    
+    return of(isValid).pipe(
+      map(valid => {
+        if (valid) {
           const user: User = { cuit, pin };
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
+          return { success: true, message: 'Login successful' };
         }
-        return isValid;
+        return { success: false, message: 'Invalid credentials' };
       })
     );
   }

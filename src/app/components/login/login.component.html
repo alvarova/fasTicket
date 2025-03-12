@@ -1,33 +1,36 @@
-<div class="login-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Iniciar Sesión</mat-card-title>
+<div class="min-h-screen bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center p-4">
+  <mat-card class="w-full max-w-md bg-white shadow-xl rounded-xl">
+    <mat-card-header class="justify-center pb-4">
+      <mat-card-title class="text-2xl font-bold text-gray-800">Iniciar Sesión</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <mat-form-field appearance="outline" class="w-full">
           <mat-label>CUIT</mat-label>
           <input matInput
                  [(ngModel)]="cuit"
                  name="cuit"
                  placeholder="XX-XXXXXXXX-X"
                  required
-                 pattern="^\d{2}-\d{8}-\d{1}$">
+                 pattern="^\d{2}-\d{8}-\d{1}$"
+                 class="text-gray-700">
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="w-full">
           <mat-label>PIN</mat-label>
           <input matInput
                  [(ngModel)]="pin"
                  name="pin"
                  type="password"
-                 required>
+                 required
+                 class="text-gray-700">
         </mat-form-field>
 
         <button mat-raised-button
                 color="primary"
                 type="submit"
-                [disabled]="!loginForm.form.valid">
+                [disabled]="!loginForm.form.valid"
+                class="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors">
           Ingresar
         </button>
       </form>
