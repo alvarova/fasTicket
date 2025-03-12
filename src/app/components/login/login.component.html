@@ -1,0 +1,36 @@
+<div class="login-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Iniciar Sesión</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>CUIT</mat-label>
+          <input matInput
+                 [(ngModel)]="cuit"
+                 name="cuit"
+                 placeholder="XX-XXXXXXXX-X"
+                 required
+                 pattern="^\d{2}-\d{8}-\d{1}$">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>PIN</mat-label>
+          <input matInput
+                 [(ngModel)]="pin"
+                 name="pin"
+                 type="password"
+                 required>
+        </mat-form-field>
+
+        <button mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="!loginForm.form.valid">
+          Ingresar
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

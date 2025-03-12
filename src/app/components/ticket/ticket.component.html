@@ -1,0 +1,79 @@
+<div class="ticket-container">
+  <div class="ticket-header">
+    <button mat-raised-button
+            color="warn"
+            [disabled]="!hasSelectedItems"
+            (click)="onDelete()">
+      Eliminar
+    </button>
+    <button mat-raised-button
+            color="primary"
+            (click)="onClose()">
+      Cerrar
+    </button>
+  </div>
+
+  <div class="ticket-body">
+    <mat-list>
+      <mat-list-item *ngFor="let item of (ticketState$ | async)?.items"
+                     [class.selected]="item.selected"
+                     (click)="toggleSelection(item.id)">
+        <div class="item-content">
+          <div class="item-header">
+            <span class="timestamp">
+              {{ item.timestamp | date:'shortDate' }}
+              {{ item.timestamp | date:'shortTime' }}
+            </span>
+            <span class="amount">{{ item.amount }}</span>
+          </div>
+          <div class="item-details">
+            <span class="description">{{ item.description }}</span>
+            <span class="payment-method">{{ item.paymentMethod }}</span>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <div class="ticket-footer">
+    <div class="subtotal">
+      Subtotal: {{ (ticketState$ | async)?.subtotal }}
+    </div>
+
+    <form #itemForm="ngForm" (ngSubmit)="onAddItem()" class="add-item-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Monto</mat-label>
+        <input matInput
+               type="number"
+               [(ngModel)]="newItem.amount"
+               name="amount"
+               required
+               min="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <input matInput
+               [(ngModel)]="newItem.description"
+               name="description"
+               placeholder="Varios">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Método de Pago</mat-label>
+        <mat-select [(ngModel)]="newItem.paymentMethod" name="paymentMethod">
+          <mat-option value="efectivo">Efectivo</mat-option>
+          <mat-option value="tarjeta">Tarjeta</mat-option>
+          <mat-option value="transferencia">Transferencia</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!itemForm.form.valid">
+        Agregar
+      </button>
+    </form>
+  </div>
+</div>
