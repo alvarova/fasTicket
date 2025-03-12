@@ -3,12 +3,17 @@
     <button mat-raised-button
             color="warn"
             [disabled]="!hasSelectedItems"
-            (click)="onDelete()">
+            (click)="onDelete()"
+            class="action-button">
       Eliminar Seleccionados
     </button>
+    <div class="logo-container">
+      <img src="logo.svg" alt="FasTicket Logo" class="logo">
+    </div>
     <button mat-raised-button
             color="primary"
-            (click)="onClose()">
+            (click)="onClose()"
+            class="action-button">
       Cerrar Ticket
     </button>
   </div>
@@ -52,7 +57,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Descripción</mat-label>
+        <mat-label>Detalle</mat-label>
         <input matInput
                [(ngModel)]="newItem.description"
                name="description"
