@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -29,9 +29,12 @@ import { Router } from '@angular/router';
   templateUrl: `ticket.Component.html`,
   styleUrl: `ticket.component.css`
 })
-export class TicketComponent {
+export class TicketComponent implements AfterViewInit {
   ticketState$;
   hasSelectedItems = false;
+
+  @ViewChild('amountInput') amountInput!: ElementRef;
+  @ViewChild('itemForm') itemForm!: NgForm;
 
   newItem = {
     amount: 0,
@@ -48,6 +51,24 @@ export class TicketComponent {
     this.ticketState$.subscribe(state => {
       this.hasSelectedItems = state.items.some(item => item.selected);
     });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.amountInput.nativeElement.focus();
+    });
+  }
+
+  onAmountFocus(): void {
+    if (this.newItem.amount === 0) {
+      this.newItem.amount = null as any;
+    }
+  }
+
+  onAmountBlur(): void {
+    if (this.newItem.amount === null) {
+      this.newItem.amount = 0;
+    }
   }
 
   onAddItem(): void {

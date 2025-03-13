@@ -29,7 +29,7 @@
               {{ item.timestamp | date:'shortDate' }}
               {{ item.timestamp | date:'shortTime' }}
             </span>
-            <span class="amount">{{ item.amount }}</span>
+            <span class="amount">{{ item.amount | currency:'USD':'symbol':'1.2-2' }}</span>
           </div>
           <div class="item-details">
             <span class="description">{{ item.description }}</span>
@@ -40,23 +40,26 @@
     </mat-list>
 
     <div class="subtotal">
-      Subtotal: {{ (ticketState$ | async)?.subtotal }}
+      Subtotal: {{ (ticketState$ | async)?.subtotal | currency:'USD':'symbol':'1.2-2' }}
     </div>
   </div>
 
   <div class="ticket-footer">
     <form #itemForm="ngForm" (ngSubmit)="onAddItem()" class="add-item-form">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="fill">
         <mat-label>Monto</mat-label>
         <input matInput
+               #amountInput
                type="number"
                [(ngModel)]="newItem.amount"
                name="amount"
                required
-               min="0">
+               min="0"
+               (focus)="onAmountFocus()"
+               (blur)="onAmountBlur()">
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="fill">
         <mat-label>Descripción </mat-label>
         <input matInput
                [(ngModel)]="newItem.description"
@@ -64,7 +67,7 @@
                placeholder="Varios">
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="fill">
         <mat-label>Método de Pago</mat-label>
         <mat-select [(ngModel)]="newItem.paymentMethod" name="paymentMethod">
           <mat-option value="efectivo">Efectivo</mat-option>

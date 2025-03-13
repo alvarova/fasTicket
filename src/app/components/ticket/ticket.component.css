@@ -48,6 +48,19 @@
 
 .action-button {
   width: 33%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.action-button[color="warn"][disabled] {
+  background-color: rgba(244, 67, 54, 0.15);
+}
+
+.action-button[color="warn"]:not([disabled]) {
+  background-color: #f44336;
+}
+
+.action-button[color="primary"] {
+  background-color: #2196f3;
 }
 
 .logo-container {
