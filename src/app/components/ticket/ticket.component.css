@@ -58,8 +58,9 @@
 }
 
 .logo {
-  height: 40px;
-  width: auto;
+  width: 120px; /* Increased from 100px to 120px (20% larger) */
+  height: auto;
+  transition: transform 0.2s;
 }
 
 .ticket-body {

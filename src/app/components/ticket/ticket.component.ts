@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { TicketService } from '../../services/ticket.service';
 import { PaymentMethod } from '../../models/data.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ticket',
@@ -40,7 +41,8 @@ export class TicketComponent {
 
   constructor(
     private ticketService: TicketService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {
     this.ticketState$ = this.ticketService.ticketState$;
     this.ticketState$.subscribe(state => {
@@ -77,5 +79,16 @@ export class TicketComponent {
     if (confirm('¿Está seguro que desea cerrar el ticket? Se exportará a CSV y se limpiará la lista.')) {
       this.ticketService.exportToCSV();
     }
+  }
+
+  onLogoClick(): void {
+    this.ticketState$.subscribe(state => {
+      if (confirm('¿Está seguro que desea salir?')) {
+        if (state.items.length > 0) {
+          this.ticketService.exportToCSV();
+        }
+        this.router.navigate(['/login']);
+      }
+    }).unsubscribe();
   }
 }
